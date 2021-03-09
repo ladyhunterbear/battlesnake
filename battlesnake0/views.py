@@ -20,11 +20,9 @@ def index(request):
         return HttpResponse("POST IT!")
 
 @csrf_exempt
+@require_http_methods(["POST"])
 def start(request):
-    if request.method == 'GET':
-        return JsonResponse({"message": "Start GET"})
-    elif request.method == 'POST':
-        return JsonResponse({"message": "Start POST"})
+    return JsonResponse({"message": "Sssssstart!"})
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -36,7 +34,6 @@ def move(request):
     except Exception as e:
         res["details"] = "Invalid request body"
         return JsonResponse(res, status.HTTP_400_BAD_REQUEST)
-    
     
     gameboard = GameBoard( req['board']['height'], req['board']['width'] )
     gameboard.add_food( req['board']['food'] )
@@ -50,16 +47,5 @@ def move(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def end(request):
-    res = {}
-    if request.method == 'GET':
-        return JsonResponse({"message": "End GET"})
-    elif request.method == 'POST':
-        try:
-            req = json.loads(request.body.decode("utf-8"))
-        except Exception as e:
-            res["details"] = "Invalid request body"
-            return JsonResponse(res, status.HTTP_400_BAD_REQUEST)
+    return JsonResponse({"message": "Fin."})
 
-        serializer = MoveRequestSerializer(req)
-        
-        return JsonResponse(serializer.data)
