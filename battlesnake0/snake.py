@@ -12,7 +12,10 @@ class Snake:
         self.head = Coordinate(snake['head']['x'], snake['head']['y'])
         self.length = snake['length']
         self.shout = snake['shout']
-        self.squad = snake['squad']
+        if 'squad' in snake.keys():
+            self.squad = snake['squad']
+        else:
+            self.squad = ''
 
     def get_key(self, x, y):
         key = str(x) + "_" + str(y)

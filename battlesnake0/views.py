@@ -24,6 +24,18 @@ def index(request):
 def start(request):
     return JsonResponse({"message": "Sssssstart!"})
 
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def hello(request):
+    return JsonResponse({
+        "apiversion": "1",
+        "author": "jharper",
+        "color": "#66D1CF",
+        "head": "pixel",
+        "tail": "pixel",
+    })
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def move(request):

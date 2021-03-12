@@ -161,7 +161,7 @@ class GameBoard:
             for j in range(self.width):
                 key = str(j) + "_" + str(i)
                 rows[i].append(self.squares[key].get_score())
-                
+        rows.reverse()        
         board_matrix = np.array(rows)
         return board_matrix
 

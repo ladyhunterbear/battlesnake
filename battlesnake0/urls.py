@@ -9,7 +9,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('api-auth/', include('rest_framework.urls')),
     # battlesnake API
-    path('api/v1/start/', views.start, name="start"),
-    path('api/v1/move/', views.move, name="move"),
-    path('api/v1/end/', views.end, name="end"),
+    path('api/v1/', views.hello, name="hello"),
+    path('api/v1/start', views.start, name="start"),
+    path('api/v1/move', views.move, name="move"),
+    path('api/v1/end', views.end, name="end"),
 ]
