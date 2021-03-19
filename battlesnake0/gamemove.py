@@ -18,21 +18,21 @@ class GameMove:
 
     def get_right(self, x, y):
         new_x = x + 1
-        if (new_x < self.gameboard.width):
+        if (new_x < self.gameboard.width - 1):
             return self.gameboard.squares[self.gameboard.get_key(new_x, y)]
         else:
             return False
 
-    def get_up(self, x, y):
+    def get_down(self, x, y):
         new_y = y - 1
         if (new_y >= 0):
             return self.gameboard.squares[self.gameboard.get_key(x, new_y)]
         else:
             return False        
         
-    def get_down(self, x, y):
+    def get_up(self, x, y):
         new_y = y + 1
-        if (new_y < self.gameboard.height):
+        if (new_y < self.gameboard.height - 1):
             return self.gameboard.squares[self.gameboard.get_key(x, new_y)]
         else:
             return False
@@ -155,12 +155,14 @@ class GameMove:
             if my_possible_moves[direction].get_score() > choice_score:
                 choice_score = my_possible_moves[direction].get_score()
                 choice = direction
-            elif my_possible_moves[direction].get_score() == choice_score:
+            elif choice != '' and my_possible_moves[direction].get_score() == choice_score:
                 new_move = random() + self.get_next_move_score(my_possible_moves[direction].get_coordinates().get_x(), my_possible_moves[direction].get_coordinates().get_y())
                 current_move = random() + self.get_next_move_score(my_possible_moves[choice].get_coordinates().get_x(), my_possible_moves[choice].get_coordinates().get_y())
                 if (new_move > current_move):
                     choice_score = my_possible_moves[direction].get_score()
                     choice = direction
+            else:
+                choice = direction
         
         board_matrix = self.gameboard.get_board_matrix()
         print(board_matrix)
