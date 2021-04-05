@@ -25,7 +25,11 @@ SECRET_KEY = '_)&xcb@q40x9ws_3wwjaf%ex*^y5c=m8a!f6ov5-__^u$v6dh7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.225.55.255','ladyhunterbear.ca']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '44.225.55.255',
+    'ladyhunterbear.ca',
+]
 
 
 # Application definition
