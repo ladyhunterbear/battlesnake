@@ -4,6 +4,7 @@ from battlesnake1.lib.strategies.hunterstrategy import HunterStrategy
 from battlesnake1.lib.strategies.wandererstrategy import WandererStrategy
 from battlesnake1.lib.strategies.circularstrategy import CircularStrategy
 from battlesnake1.lib.strategies.avoidancestrategy import AvoidanceStrategy
+from battlesnake1.lib.strategies.protectionstrategy import ProtectionStrategy
 from battlesnake1.gameboardsquare import GameBoardSquare
 from battlesnake1.gameboard import GameBoard
 from battlesnake1.lib.enums.coordinate import Coordinate
@@ -52,26 +53,30 @@ class Game:
         best_move_coords = None
         best_move_score = 0
         
-        # evaluate strategies
-        
-        #Gatherer Strategy
-        if (self.my_snake.get_health() < 80):
-            gatherer_strategy = GathererStrategy()
-            self.gameboard = gatherer_strategy.process(self.gameboard)
-        
-        # Hunter Strategy
-        if self.my_snake.get_health() > 30:
-            hunter_strategy = HunterStrategy()
-            self.gameboard = hunter_strategy.process(self.gameboard)
-        
-        #Avoidance Strategy
-        avoidance_strategy = AvoidanceStrategy()
-        self.gameboard = avoidance_strategy.process(self.gameboard)
-        # circle strategy
+        # Strategies
         
         # Wander Strategy
         wanderer_strategy = WandererStrategy()
         self.gameboard = wanderer_strategy.process(self.gameboard)
+        
+        # Protection Strategy
+        protection_strategy = ProtectionStrategy()
+        self.gameboard = protection_strategy.process(self.gameboard)
+        
+        # Gatherer Strategy
+        max_snake_length = len(self.gameboard.squares) / 4
+        if (self.my_snake.get_health() < 50 or self.my_snake.get_length() < max_snake_length):
+            gatherer_strategy = GathererStrategy()
+            self.gameboard = gatherer_strategy.process(self.gameboard)
+        
+        # Hunter Strategy
+        hunter_strategy = HunterStrategy()
+        self.gameboard = hunter_strategy.process(self.gameboard)
+        
+        #Avoidance Strategy
+        avoidance_strategy = AvoidanceStrategy()
+        self.gameboard = avoidance_strategy.process(self.gameboard)
+        
         
         my_possible_moves = self.gameboard.get_possible_directions(self.my_snake.get_head())
         if (my_possible_moves):
@@ -177,7 +182,7 @@ class Game:
     def get_move(self):        
         choice = self.evaluate_gameboard()
         board_matrix = self.gameboard.get_board_matrix()
-        print(board_matrix)
-        print(choice)
+        # print(board_matrix)
+        # print(choice)
         response = {"move": choice, "shout": "I should move " + choice}    
         return response
