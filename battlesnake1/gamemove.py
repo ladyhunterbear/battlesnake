@@ -143,18 +143,13 @@ class Game:
     Check if enemy snake is weaker.
     '''
     def enemy_snake_is_weaker(self, enemy_snake) -> bool:
-        lesser_length = True if enemy_snake.get_length() < self.my_snake.get_length() else False
-        equal_length = True if enemy_snake.get_length() == self.my_snake.get_length() else False
-        lesser_health = True if enemy_snake.get_health() < self.my_snake.get_health() else False
-        return lesser_length or (equal_length and lesser_health)
+        return True if enemy_snake.get_length() < self.my_snake.get_length() else False
         
     '''
     Check if enemy snake is equal in health.
     '''
     def enemy_snake_is_equal(self, enemy_snake) -> bool:
-        equal_length = True if enemy_snake.get_length() == self.my_snake.get_length() else False
-        equal_health = True if enemy_snake.get_health() == self.my_snake.get_health() else False
-        return equal_length and equal_health
+        return True if enemy_snake.get_length() == self.my_snake.get_length() else False
     
     '''
     Check if enemy snake has more health than my snake
