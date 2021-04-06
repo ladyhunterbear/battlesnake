@@ -3,11 +3,14 @@ from battlesnake1.gameboard import GameBoard
 from battlesnake1.gameboardsquare import GameBoardSquare
 from battlesnake1.lib.enums.gameboardsquarestate import GameBoardSquareState
 
+'''
+
+'''
 class HunterStrategy(StrategyInterface):
   gameboard = None
   
   def should_update_square_state(self, possible_square: GameBoardSquare, test_state: GameBoardSquareState) -> bool:
-    return possible_square.get_state_value() > 0 and possible_square.get_state_value() <= test_state.value
+    return possible_square.get_state_value() > 0 and possible_square.get_state_value() < test_state.value
       
   
   def evaluate_surrouding_square_states(self, state, new_state):
@@ -24,9 +27,12 @@ class HunterStrategy(StrategyInterface):
   def process(self, gameboard: GameBoard) -> GameBoard:
     self.gameboard = gameboard
     
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP)
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE)
+    
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP)
+    
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP)
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP)
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_4_STEP)
+    #self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP)
+    #self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_4_STEP)
     
     return self.gameboard

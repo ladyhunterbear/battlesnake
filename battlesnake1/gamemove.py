@@ -69,13 +69,15 @@ class Game:
             gatherer_strategy = GathererStrategy()
             self.gameboard = gatherer_strategy.process(self.gameboard)
         
+        #Avoidance Strategy
+        avoidance_strategy = AvoidanceStrategy()
+        self.gameboard = avoidance_strategy.process(self.gameboard)
+        
         # Hunter Strategy
         hunter_strategy = HunterStrategy()
         self.gameboard = hunter_strategy.process(self.gameboard)
         
-        #Avoidance Strategy
-        avoidance_strategy = AvoidanceStrategy()
-        self.gameboard = avoidance_strategy.process(self.gameboard)
+        
         
         
         my_possible_moves = self.gameboard.get_possible_directions(self.my_snake.get_head())
