@@ -2,6 +2,10 @@ from enum import Enum
 
 class GameBoardSquareState(Enum):
         EMPTY = 50
+        EMPTY_CORNER = 5
+        EMPTY_CORNER_1_STEP = 10
+        EMPTY_CORNER_2_STEPS = 15
+        EMPTY_CORNER_3_STEPS = 19
         EMPTY_EDGE = 20
         EMPTY_EDGE_1_STEP = 30
         EMPTY_EDGE_2_STEPS = 40
