@@ -47,7 +47,5 @@ class AvoidanceStrategy(StrategyInterface):
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
 
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_SELF_BODY, GameBoardSquareState.SNAKE_SELF_BODY_1_STEP)
-    
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_SELF_BODY_1_STEP, GameBoardSquareState.SNAKE_SELF_BODY_2_STEPS)
-    
+
     return self.gameboard
