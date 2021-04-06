@@ -64,7 +64,7 @@ class Game:
         self.gameboard = protection_strategy.process(self.gameboard)
         
         # Gatherer Strategy
-        max_snake_length = len(self.gameboard.squares) / 4
+        max_snake_length = len(self.gameboard.squares) * 0.25
         if (self.my_snake.get_health() < 50 or self.my_snake.get_length() < max_snake_length):
             gatherer_strategy = GathererStrategy()
             self.gameboard = gatherer_strategy.process(self.gameboard)

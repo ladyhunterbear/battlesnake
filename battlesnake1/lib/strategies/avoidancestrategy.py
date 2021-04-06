@@ -10,7 +10,8 @@ class AvoidanceStrategy(StrategyInterface):
   gameboard = None
   
   def should_update_square_state(self, possible_square: GameBoardSquare, test_state: GameBoardSquareState) -> bool:
-    return possible_square.get_state_value() > 0 and possible_square.get_state_value() > test_state.value
+    possible_value = possible_square.get_state_value()
+    return possible_value > 0 and possible_value > test_state.value and possible_value <= GameBoardSquareState.EMPTY.value
       
   
   def evaluate_surrouding_square_states(self, state, new_state):
@@ -27,9 +28,14 @@ class AvoidanceStrategy(StrategyInterface):
   def process(self, gameboard: GameBoard) -> GameBoard:
     self.gameboard = gameboard
     
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY, GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP)
+    
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP, GameBoardSquareState.SNAKE_ENEMY_BODY_2_STEPS)
+    
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
+    
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE)
@@ -37,11 +43,8 @@ class AvoidanceStrategy(StrategyInterface):
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP)
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP)
+    
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
-    
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY, GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP)
-    
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP, GameBoardSquareState.SNAKE_ENEMY_BODY_2_STEPS)
 
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_SELF_BODY, GameBoardSquareState.SNAKE_SELF_BODY_1_STEP)
     
