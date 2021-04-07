@@ -11,7 +11,7 @@ class AvoidanceStrategy(StrategyInterface):
   
   def should_update_square_state(self, possible_square: GameBoardSquare, test_state: GameBoardSquareState) -> bool:
     possible_value = possible_square.get_state_value()
-    return possible_value > 0 and possible_value > test_state.value
+    return possible_value > 0 and possible_value <= GameBoardSquareState.EMPTY.value and possible_value > test_state.value
       
   
   def evaluate_surrouding_square_states(self, state, new_state):
