@@ -45,16 +45,7 @@ class Game:
         return False
 
     
-
-
-    def evaluate_gameboard(self):
-        choice = 'up'
-        choice_score = 0
-        best_move_coords = None
-        best_move_score = 0
-        
-        # Strategies
-        
+    def evaluate_strategies(self):
         # Wander Strategy
         wanderer_strategy = WandererStrategy()
         self.gameboard = wanderer_strategy.process(self.gameboard)
@@ -65,7 +56,6 @@ class Game:
         
         # Gatherer Strategy
         max_snake_length = len(self.gameboard.squares) * 0.18
-        #print(max_snake_length)
         if (self.my_snake.get_health() < 50 or self.my_snake.get_length() < max_snake_length):
             gatherer_strategy = GathererStrategy()
             self.gameboard = gatherer_strategy.process(self.gameboard)
@@ -77,25 +67,34 @@ class Game:
         # Hunter Strategy
         hunter_strategy = HunterStrategy()
         self.gameboard = hunter_strategy.process(self.gameboard)
+    
+    
+    def get_next_move_score(self, coord: Coordinate) -> int:
+        next_move_score = 0
+        possible_next_moves = self.gameboard.get_possible_directions(coord)
+        for direction in possible_next_moves:
+            next_move_score = next_move_score + self.gameboard.get_square(possible_next_moves[direction]).get_state_value()
+            
+        return next_move_score
+
+
+    def evaluate_gameboard(self):
+        choice = 'up'
+        choice_score = 0
+        best_move_coords = None
+        best_move_score = 0
         
-        
-        
+        # Strategies
+        self.evaluate_strategies()
         
         my_possible_moves = self.gameboard.get_possible_directions(self.my_snake.get_head())
         if (my_possible_moves):
             for direction in my_possible_moves:
-                seed_A = random()
-                seed_B = random()
-                possible_move_coords = my_possible_moves[direction]
-                possible_move_square = self.gameboard.get_square(possible_move_coords)
-                possible_moves_score = possible_move_square.get_state_value() + seed_A
-                possible_best_move_score = best_move_score + seed_B
-                if  possible_moves_score > possible_best_move_score:
-                    best_move_coords = possible_move_coords
-                    best_move_score = possible_move_square.get_state_value()
+                possible_move_score = self.gameboard.get_square(my_possible_moves[direction]).get_state_value() + self.get_next_move_score(my_possible_moves[direction])
+                if  possible_move_score > best_move_score:
+                    best_move_coords = my_possible_moves[direction]
+                    best_move_score = possible_move_score
                     choice = direction
-
-
         return choice
 
 
