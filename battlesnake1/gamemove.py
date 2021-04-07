@@ -76,13 +76,13 @@ class Game:
         self.gameboard = hunter_strategy.process(self.gameboard)
     
     
-    def get_next_move_score(self, coord: Coordinate) -> int:
+    def get_next_move_score(self, coord: Coordinate) -> float:
+        max_move_score = 300 # total of highest possible scoring moves (food)
         next_move_score = 0
         possible_next_moves = self.gameboard.get_possible_directions(coord)
         for direction in possible_next_moves:
             next_move_score = next_move_score + self.gameboard.get_square(possible_next_moves[direction]).get_state_value()
-            
-        return next_move_score
+        return next_move_score / max_move_score
 
 
     def evaluate_gameboard(self):
