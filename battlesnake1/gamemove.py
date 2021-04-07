@@ -5,6 +5,7 @@ from battlesnake1.lib.strategies.wandererstrategy import WandererStrategy
 from battlesnake1.lib.strategies.circularstrategy import CircularStrategy
 from battlesnake1.lib.strategies.avoidancestrategy import AvoidanceStrategy
 from battlesnake1.lib.strategies.protectionstrategy import ProtectionStrategy
+from battlesnake1.lib.strategies.dietstrategy import DietStrategy
 from battlesnake1.gameboardsquare import GameBoardSquare
 from battlesnake1.gameboard import GameBoard
 from battlesnake1.lib.enums.coordinate import Coordinate
@@ -62,10 +63,12 @@ class Game:
         self.gameboard = protection_strategy.process(self.gameboard)
         
         # Gatherer Strategy
-       
         if (self.my_snake.get_health() < 33) or (self.my_snake.get_length() < self.get_max_snake_length()):
             gatherer_strategy = GathererStrategy()
             self.gameboard = gatherer_strategy.process(self.gameboard)
+        else:
+            diet_strategy = DietStrategy()
+            self.gameboard = diet_strategy.process(self.gameboard)
         
         #Avoidance Strategy
         avoidance_strategy = AvoidanceStrategy()

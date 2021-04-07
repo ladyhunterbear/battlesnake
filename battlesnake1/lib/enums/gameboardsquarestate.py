@@ -10,6 +10,7 @@ class GameBoardSquareState(Enum):
         EMPTY_EDGE_1_STEP = 30
         EMPTY_EDGE_2_STEPS = 40
         FOOD = 100
+        AVOID_FOOD = 45
         FOOD_1_STEP = 90
         FOOD_2_STEPS = 80
         FOOD_3_STEPS = 70
