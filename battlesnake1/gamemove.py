@@ -44,6 +44,13 @@ class Game:
                 return self.snakes[snake_id]
         return False
 
+
+    def get_max_snake_length(self) -> int:
+        max_snake_length = len(self.gameboard.squares) / 10
+        for snake in self.snakes:
+            if self.snakes[snake].get_length() > max_snake_length:
+                self.snakes[snake].get_length() + 1 
+        return max_snake_length
     
     def evaluate_strategies(self):
         # Wander Strategy
@@ -55,8 +62,8 @@ class Game:
         self.gameboard = protection_strategy.process(self.gameboard)
         
         # Gatherer Strategy
-        max_snake_length = len(self.gameboard.squares) * 0.1
-        if (self.my_snake.get_health() < 33 or self.my_snake.get_length() < max_snake_length):
+       
+        if (self.my_snake.get_health() < 33) or (self.my_snake.get_length() < self.get_max_snake_length()):
             gatherer_strategy = GathererStrategy()
             self.gameboard = gatherer_strategy.process(self.gameboard)
         
