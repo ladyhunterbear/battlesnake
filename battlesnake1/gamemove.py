@@ -50,7 +50,7 @@ class Game:
         max_snake_length = len(self.gameboard.squares) / 10
         for snake in self.snakes:
             if self.snakes[snake].get_length() > max_snake_length:
-                self.snakes[snake].get_length() + 1 
+                max_snake_length = self.snakes[snake].get_length() + 1 
         return max_snake_length
     
     def evaluate_strategies(self):
@@ -62,17 +62,17 @@ class Game:
         protection_strategy = ProtectionStrategy()
         self.gameboard = protection_strategy.process(self.gameboard)
         
+        #Avoidance Strategy
+        avoidance_strategy = AvoidanceStrategy()
+        self.gameboard = avoidance_strategy.process(self.gameboard)
+        
         # Gatherer Strategy
-        if (self.my_snake.get_health() < 33) or (self.my_snake.get_length() < self.get_max_snake_length()):
+        if (self.my_snake.get_health() < 25) or (self.my_snake.get_length() < self.get_max_snake_length()):
             gatherer_strategy = GathererStrategy()
             self.gameboard = gatherer_strategy.process(self.gameboard)
         else:
             diet_strategy = DietStrategy()
             self.gameboard = diet_strategy.process(self.gameboard)
-        
-        #Avoidance Strategy
-        avoidance_strategy = AvoidanceStrategy()
-        self.gameboard = avoidance_strategy.process(self.gameboard)
         
         # Hunter Strategy
         hunter_strategy = HunterStrategy()
@@ -120,7 +120,7 @@ class Game:
         head_coord = Coordinate(self.my_snake.get_head().get_x(), self.my_snake.get_head().get_y())
         head_square = self.gameboard.get_square(head_coord)
         head_square.set_state(GameBoardSquareState.SNAKE_SELF_HEAD)
-    
+        
     
     '''
     Add food to the game board.
@@ -194,7 +194,7 @@ class Game:
     def get_move(self):        
         choice = self.evaluate_gameboard()
         board_matrix = self.gameboard.get_board_matrix()
-        # print(board_matrix)
-        # print(choice)
+        print(board_matrix)
+        print(choice)
         response = {"move": choice, "shout": "I should move " + choice}    
         return response

@@ -3,6 +3,9 @@ from battlesnake1.gameboard import GameBoard
 from battlesnake1.gameboardsquare import GameBoardSquare
 from battlesnake1.lib.enums.gameboardsquarestate import GameBoardSquareState
 
+'''
+
+'''
 class GathererStrategy(StrategyInterface):
   gameboard = None
   
