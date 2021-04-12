@@ -47,7 +47,7 @@ class Game:
 
 
     def get_max_snake_length(self) -> int:
-        max_snake_length = len(self.gameboard.squares) / 10
+        max_snake_length = len(self.gameboard.squares) * 0.06
         for snake in self.snakes:
             if self.snakes[snake].get_length() > max_snake_length:
                 max_snake_length = self.snakes[snake].get_length() + 1 
