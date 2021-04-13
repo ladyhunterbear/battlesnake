@@ -62,10 +62,6 @@ class Game:
         protection_strategy = ProtectionStrategy()
         self.gameboard = protection_strategy.process(self.gameboard)
         
-        #Avoidance Strategy
-        avoidance_strategy = AvoidanceStrategy()
-        self.gameboard = avoidance_strategy.process(self.gameboard)
-        
         # Gatherer Strategy
         if (self.my_snake.get_health() < 25) or (self.my_snake.get_length() < self.get_max_snake_length()):
             gatherer_strategy = GathererStrategy()
@@ -74,10 +70,13 @@ class Game:
             diet_strategy = DietStrategy()
             self.gameboard = diet_strategy.process(self.gameboard)
         
+        #Avoidance Strategy
+        avoidance_strategy = AvoidanceStrategy()
+        self.gameboard = avoidance_strategy.process(self.gameboard)
+        
         # Hunter Strategy
         hunter_strategy = HunterStrategy()
         self.gameboard = hunter_strategy.process(self.gameboard)
-    
     
     def get_next_move_score(self, coord: Coordinate) -> float:
         max_move_score = 300 # total of highest possible scoring moves (food)
