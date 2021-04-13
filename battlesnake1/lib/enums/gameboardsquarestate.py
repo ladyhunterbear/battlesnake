@@ -20,8 +20,8 @@ class GameBoardSquareState(Enum):
         SNAKE_SELF_TAIL = 1
         SNAKE_SELF_BODY_1_STEP = 17
         SNAKE_SELF_BODY_2_STEPS = 27
-        SNAKE_ENEMY_BODY_1_STEP = 26
-        SNAKE_ENEMY_BODY_2_STEPS = 36
+        SNAKE_ENEMY_BODY_1_STEP = 16
+        SNAKE_ENEMY_BODY_2_STEPS = 26
         SNAKE_ENEMY_BODY = 0
         SNAKE_ENEMY_TAIL = 1
         SNAKE_STRONGER_ENEMY_HEAD = -4
