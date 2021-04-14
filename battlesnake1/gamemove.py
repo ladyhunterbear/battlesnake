@@ -62,7 +62,7 @@ class Game:
         # An edge avoidance strategy that should only apply away from edges
         x = self.my_snake.get_head().get_x()
         y = self.my_snake.get_head().get_y()
-        if (x > 1 and x < self.gameboard.width - 2) and (y > 1 and y < self.gameboard.height - 2):
+        if (x >= 1 and x <= self.gameboard.width - 2) and (y >= 1 and y <= self.gameboard.height - 2):
             protection_strategy = ProtectionStrategy()
             self.gameboard = protection_strategy.process(self.gameboard)
         
