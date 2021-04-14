@@ -30,7 +30,7 @@ class AvoidanceStrategy(StrategyInterface):
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY, GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP)
     
-    # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP, GameBoardSquareState.SNAKE_ENEMY_BODY_2_STEPS)
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_ENEMY_BODY_1_STEP, GameBoardSquareState.SNAKE_ENEMY_BODY_2_STEPS)
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     
@@ -45,8 +45,10 @@ class AvoidanceStrategy(StrategyInterface):
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP)
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS)
 
-    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_SELF_BODY, GameBoardSquareState.SNAKE_SELF_BODY_1_STEP)
+    # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_SELF_BODY, GameBoardSquareState.SNAKE_SELF_BODY_1_STEP)
     
     # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_SELF_BODY_1_STEP, GameBoardSquareState.SNAKE_SELF_BODY_2_STEPS)
 
