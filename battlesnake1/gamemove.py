@@ -1,10 +1,12 @@
 from battlesnake1.lib.enums.gameboardsquarestate import GameBoardSquareState
 from battlesnake1.lib.strategies.gathererstrategy import GathererStrategy
 from battlesnake1.lib.strategies.hunterstrategy import HunterStrategy
+from battlesnake1.lib.strategies.edgehunterstrategy import EdgeHunterStrategy
 from battlesnake1.lib.strategies.wandererstrategy import WandererStrategy
 from battlesnake1.lib.strategies.circularstrategy import CircularStrategy
 from battlesnake1.lib.strategies.avoidancestrategy import AvoidanceStrategy
 from battlesnake1.lib.strategies.protectionstrategy import ProtectionStrategy
+from battlesnake1.lib.strategies.edgestrategy import EdgeStrategy
 from battlesnake1.lib.strategies.dietstrategy import DietStrategy
 from battlesnake1.gameboardsquare import GameBoardSquare
 from battlesnake1.gameboard import GameBoard
@@ -65,6 +67,9 @@ class Game:
         if (x >= 1 and x <= self.gameboard.width - 2) and (y >= 1 and y <= self.gameboard.height - 2):
             protection_strategy = ProtectionStrategy()
             self.gameboard = protection_strategy.process(self.gameboard)
+        else:
+            edge_strategy = EdgeStrategy()
+            self.gameboard = edge_strategy.process(self.gameboard)
         
         # Gatherer Strategy
         if (self.my_snake.get_health() < 25) or (self.my_snake.get_length() < self.get_max_snake_length()):
@@ -82,6 +87,9 @@ class Game:
         if (x >= 1 and x <= self.gameboard.width - 2) and (y >= 1 and y <= self.gameboard.height - 2):
             hunter_strategy = HunterStrategy()
             self.gameboard = hunter_strategy.process(self.gameboard)
+        else:
+            edge_hunter_strategy = EdgeHunterStrategy()
+            self.gameboard = edge_hunter_strategy.process(self.gameboard)
     
     def get_next_move_score(self, coord: Coordinate) -> float:
         max_move_score = 300 # total of highest possible scoring moves (food)
