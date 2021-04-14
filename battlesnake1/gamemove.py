@@ -79,8 +79,9 @@ class Game:
         self.gameboard = avoidance_strategy.process(self.gameboard)
         
         # Hunter Strategy
-        hunter_strategy = HunterStrategy()
-        self.gameboard = hunter_strategy.process(self.gameboard)
+        if (x >= 1 and x <= self.gameboard.width - 2) and (y >= 1 and y <= self.gameboard.height - 2):
+            hunter_strategy = HunterStrategy()
+            self.gameboard = hunter_strategy.process(self.gameboard)
     
     def get_next_move_score(self, coord: Coordinate) -> float:
         max_move_score = 300 # total of highest possible scoring moves (food)

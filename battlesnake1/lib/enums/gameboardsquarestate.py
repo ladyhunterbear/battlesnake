@@ -17,7 +17,7 @@ class GameBoardSquareState(Enum):
         FOOD_4_STEPS = 60
         SNAKE_SELF_HEAD = -1
         SNAKE_SELF_BODY = -11
-        SNAKE_SELF_TAIL = 1
+        SNAKE_SELF_TAIL = 47
         SNAKE_SELF_BODY_1_STEP = 11
         SNAKE_SELF_BODY_2_STEPS = 27
         SNAKE_ENEMY_BODY_1_STEP = 16
