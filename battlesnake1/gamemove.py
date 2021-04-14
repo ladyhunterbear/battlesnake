@@ -59,8 +59,12 @@ class Game:
         self.gameboard = wanderer_strategy.process(self.gameboard)
         
         # Protection Strategy
-        protection_strategy = ProtectionStrategy()
-        self.gameboard = protection_strategy.process(self.gameboard)
+        # An edge avoidance strategy that should only apply away from edges
+        x = self.my_snake.get_head().get_x()
+        y = self.my_snake.get_head().get_y()
+        if (x > 2 and x < self.gameboard.width - 3) and (y > 2 and y < self.gameboard.height - 3):
+            protection_strategy = ProtectionStrategy()
+            self.gameboard = protection_strategy.process(self.gameboard)
         
         # Gatherer Strategy
         if (self.my_snake.get_health() < 25) or (self.my_snake.get_length() < self.get_max_snake_length()):
