@@ -43,7 +43,9 @@ class ProtectionStrategy(StrategyInterface):
     self.evaluate_surrouding_square_states(GameBoardSquareState.EMPTY_EDGE, GameBoardSquareState.EMPTY_EDGE_1_STEP)
     
     self.evaluate_surrouding_square_states(GameBoardSquareState.EMPTY_CORNER, GameBoardSquareState.EMPTY_CORNER_1_STEP)
+    
     self.evaluate_surrouding_square_states(GameBoardSquareState.EMPTY_CORNER_1_STEP, GameBoardSquareState.EMPTY_CORNER_2_STEPS)
+    
     self.evaluate_surrouding_square_states(GameBoardSquareState.EMPTY_CORNER_2_STEPS, GameBoardSquareState.EMPTY_CORNER_3_STEPS)
     
     return self.gameboard

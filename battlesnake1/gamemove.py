@@ -207,7 +207,7 @@ class Game:
     def get_move(self):        
         choice = self.evaluate_gameboard()
         board_matrix = self.gameboard.get_board_matrix()
-        # print(board_matrix)
-        # print(choice)
+        print(board_matrix)
+        print(choice)
         response = {"move": choice, "shout": "I should move " + choice}    
         return response

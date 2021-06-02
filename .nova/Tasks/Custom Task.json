@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "python manage.py runserver"
+    }
+  },
+  "identifier" : "447B4D8A-5126-4E02-B7D7-56D096C32CCC",
+  "openLogOnRun" : "start"
+}
