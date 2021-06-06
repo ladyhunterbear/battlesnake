@@ -23,11 +23,10 @@ Move all logic here and out of the other classes.
 '''
 class Game:
     gameboard: GameBoard = None
-    snakes = {}
-    my_snake = None
+    snakes: Snakes = None
+    my_snake: Snake = None
     snake_squares = {}
     
-
     '''
     Initialize the game by setting the game board condition
     '''
@@ -38,21 +37,12 @@ class Game:
         self.add_snakes(request['board']['snakes'])
         self.add_food(request['board']['food'])
 
-    '''
-    Get snake by snake ID
-    '''
-    def get_snake_by_id(self, id):
-        for snake_id in self.snakes:
-            if snake_id == id:
-                return self.snakes[snake_id]
-        return False
-
-
     def get_max_snake_length(self) -> int:
         max_snake_length = 4
-        for snake in self.snakes:
-            if self.snakes[snake].get_health() > 0 and self.snakes[snake].get_length() > max_snake_length:
-                max_snake_length = self.snakes[snake].get_length() + 1 
+        for snake_id in self.snakes.get_ids():
+            snake = self.snake.get(snake_id)
+            if snake and snake.get_health() > 0 and snake.get_length() > max_snake_length:
+                max_snake_length = snake.get_length() + 1 
         return max_snake_length
     
     def evaluate_strategies(self):
@@ -133,7 +123,34 @@ class Game:
         head_coord = Coordinate(self.my_snake.get_head().get_x(), self.my_snake.get_head().get_y())
         head_square = self.gameboard.get_square(head_coord)
         head_square.set_state(GameBoardSquareState.SNAKE_SELF_HEAD)
-
+    
+    '''
+    Add enemy snakes to the game board.
+    '''
+    def add_snakes(self, snakes):
+        for enemy_snake in snakes:
+            if enemy_snake['id'] == self.my_snake.get_id():
+                continue
+                
+            snake = Snake(enemy_snake)
+            
+            self.snakes.add(snake)
+            
+            for body_coords in snake.body:
+                coord = Coordinate(snake.body[body_coords].get_x(), snake.body[body_coords].get_y())
+                self.gameboard.get_square(coord).set_state(GameBoardSquareState.SNAKE_ENEMY_BODY)
+                self.add_snake_to_snake_square_lookup(coord, snake.id)
+            snake_head_coord = Coordinate(snake.get_head().get_x(), snake.get_head().get_y())
+            head_square = self.gameboard.get_square(snake_head_coord)
+            
+            if self.enemy_snake_is_weaker(snake):
+                head_square.set_state(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD)
+            
+            if self.enemy_snake_is_equal(snake):
+                head_square.set_state(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD)
+            
+            if self.enemy_snake_is_stronger(snake):
+                head_square.set_state(GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD)
 
     '''
     Add food to the game board.
@@ -143,31 +160,6 @@ class Game:
             for food in food_squares:
                 coord = Coordinate(food['x'], food['y'])
                 square = self.gameboard.get_square(coord).set_state(GameBoardSquareState.FOOD)
-    
-    '''
-    Add enemy snakes to the game board.
-    '''
-    def add_snakes(self, snakes):
-        for enemy_snake in snakes:
-            if (enemy_snake['id'] != self.my_snake.get_id()):
-                snake = Snake(enemy_snake)
-                self.snakes[snake.id] = snake
-                for body_coords in snake.body:
-                    coord = Coordinate(snake.body[body_coords].get_x(), snake.body[body_coords].get_y())
-                    self.gameboard.get_square(coord).set_state(GameBoardSquareState.SNAKE_ENEMY_BODY)
-                    self.add_snake_to_snake_square_lookup(coord, snake.id)
-                snake_head_coord = Coordinate(snake.get_head().get_x(), snake.get_head().get_y())
-                head_square = self.gameboard.get_square(snake_head_coord)
-                
-                if self.enemy_snake_is_weaker(snake):
-                    head_square.set_state(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD)
-                
-                if self.enemy_snake_is_equal(snake):
-                    head_square.set_state(GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD)
-                
-                if self.enemy_snake_is_stronger(snake):
-                    head_square.set_state(GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD)
-
 
     '''
     Check if enemy snake is weaker.
