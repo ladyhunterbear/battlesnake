@@ -16,7 +16,7 @@ class GameStrategyFactory:
         # if ruleset == GameType.SOLO.value:
         #     strategy = SoloStrategy()
         # elif ruleset == GameType.STANDARD.value:
-            strategy = StandardStrategy()
+        strategy = StandardStrategy()
         # elif ruleset == GameType.DUEL:
         #     strategy = DuelStrategy()
         # elif ruleset == GameType.ARENA:
