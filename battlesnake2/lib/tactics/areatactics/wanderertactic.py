@@ -1,4 +1,4 @@
-from battlesnake2.lib.strategies.strategyinterface import StrategyInterface
+from battlesnake2.lib.tactics.tactic import Tactic
 from battlesnake2.gameboard import GameBoard
 from battlesnake2.gameboardsquare import GameBoardSquare
 from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
@@ -6,7 +6,7 @@ from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
 '''
 General weighting for wandering about the board.
 '''
-class WandererStrategy(StrategyInterface):
+class WandererTactic(Tactic):
   gameboard = None
   
   def should_update_square_state(self, possible_square: GameBoardSquare, test_state: GameBoardSquareState) -> bool:

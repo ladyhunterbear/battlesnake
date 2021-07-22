@@ -1,4 +1,4 @@
-from battlesnake2.lib.strategies.strategyinterface import StrategyInterface
+from battlesnake2.lib.tactics.tactic import Tactic
 from battlesnake2.gameboard import GameBoard
 from battlesnake2.gameboardsquare import GameBoardSquare
 from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
@@ -6,11 +6,11 @@ from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
 '''
 
 '''
-class GathererStrategy(StrategyInterface):
+class EdgeHunterTactic(Tactic):
   gameboard = None
   
   def should_update_square_state(self, possible_square: GameBoardSquare, test_state: GameBoardSquareState) -> bool:
-    return possible_square.get_state_value() > 0 and possible_square.get_state_value() <= test_state.value
+    return possible_square.get_state_value() > 0 and possible_square.get_state_value() < test_state.value
       
   
   def evaluate_surrouding_square_states(self, state, new_state):
@@ -27,8 +27,14 @@ class GathererStrategy(StrategyInterface):
   def process(self, gameboard: GameBoard) -> GameBoard:
     self.gameboard = gameboard
     
-    self.evaluate_surrouding_square_states(GameBoardSquareState.FOOD, GameBoardSquareState.FOOD_1_STEP)
-    self.evaluate_surrouding_square_states(GameBoardSquareState.FOOD_1_STEP, GameBoardSquareState.FOOD_2_STEPS)
-    self.evaluate_surrouding_square_states(GameBoardSquareState.FOOD_2_STEPS, GameBoardSquareState.FOOD_3_STEPS)
-    self.evaluate_surrouding_square_states(GameBoardSquareState.FOOD_3_STEPS, GameBoardSquareState.FOOD_4_STEPS)
+    self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE)
+    
+    # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP)
+     
+    # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP)
+     
+    # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP)
+    
+    # self.evaluate_surrouding_square_states(GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_4_STEP)
+    # 
     return self.gameboard

@@ -10,7 +10,7 @@ from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 import json
-from battlesnake2.gamemove import Game
+from battlesnake2.game import Game
 
 
 def index(request):
@@ -29,11 +29,11 @@ def start(request):
 @require_http_methods(["GET"])
 def hello(request):
     return JsonResponse({
-        "apiversion": "1",
+        "apiversion": "2",
         "author": "jharper",
-        "color": "#000000",
+        "color": "#42F5E0",
         "head": "orca",
-        "tail": "swoop",
+        "tail": "bolt",
     })
 
 @csrf_exempt

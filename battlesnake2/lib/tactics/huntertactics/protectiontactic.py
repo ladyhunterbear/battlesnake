@@ -1,4 +1,4 @@
-from battlesnake2.lib.strategies.strategyinterface import StrategyInterface
+from battlesnake2.lib.tactics.tactic import Tactic
 from battlesnake2.gameboard import GameBoard
 from battlesnake2.gameboardsquare import GameBoardSquare
 from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
@@ -7,7 +7,7 @@ from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
 Based on games where I was killed by an attacking snake on the outside, 
 as a result of getting penned in, is it better to stay away from the edges?
 '''
-class ProtectionStrategy(StrategyInterface):
+class ProtectionTactic(Tactic):
   gameboard = None
   
   def should_update_edge_square_state(self, possible_square: GameBoardSquare, test_state: GameBoardSquareState) -> bool:

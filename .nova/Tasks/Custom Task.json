@@ -1,5 +1,9 @@
 {
   "actions" : {
+    "build" : {
+      "enabled" : true,
+      "script" : "python manage.py test"
+    },
     "run" : {
       "enabled" : true,
       "script" : "python manage.py runserver"
