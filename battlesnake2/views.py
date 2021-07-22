@@ -29,7 +29,7 @@ def start(request):
 @require_http_methods(["GET"])
 def hello(request):
     return JsonResponse({
-        "apiversion": "2",
+        "apiversion": "1",
         "author": "jharper",
         "color": "#42F5E0",
         "head": "orca",
