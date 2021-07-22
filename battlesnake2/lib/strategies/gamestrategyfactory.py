@@ -11,11 +11,11 @@ from battlesnake2.lib.enums.gametype import GameType
 class GameStrategyFactory:
     @staticmethod
     def make(gamestate: GameState) -> GameStrategy:
-        strategy = None
-        ruleset = gamestate.get_ruleset()
-        if ruleset == GameType.SOLO.value:
-            strategy = SoloStrategy()
-        elif ruleset == GameType.STANDARD.value:
+        # strategy = None
+        # ruleset = gamestate.get_ruleset()
+        # if ruleset == GameType.SOLO.value:
+        #     strategy = SoloStrategy()
+        # elif ruleset == GameType.STANDARD.value:
             strategy = StandardStrategy()
         # elif ruleset == GameType.DUEL:
         #     strategy = DuelStrategy()
