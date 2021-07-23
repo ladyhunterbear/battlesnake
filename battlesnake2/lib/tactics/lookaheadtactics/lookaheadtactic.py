@@ -7,7 +7,9 @@ from battlesnake2.lib.coordinates.coordinate import Coordinate
 import copy
 
 class LookAheadTactic(Tactic):
-    min_required_possible_future_moves = 15
+    bad_lookahead = 5
+    poor_lookahead = 10
+    questionable_lookahead = 15
     
     override_values = [
         GameBoardSquareState.FOOD.value,
@@ -15,7 +17,7 @@ class LookAheadTactic(Tactic):
         GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD.value,
         GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD.value,
         GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD.value,
-        GameBoardSquareState.SNAKE_ENEMY_BODY,
+        GameBoardSquareState.SNAKE_ENEMY_BODY.value,
         GameBoardSquareState.SNAKE_ENEMY_TAIL.value,
         GameBoardSquareState.SNAKE_SELF_HEAD.value,
         GameBoardSquareState.SNAKE_SELF_BODY.value,
@@ -84,7 +86,14 @@ class LookAheadTactic(Tactic):
             # gb = self.loop(gb, LookAheadSquareState.MOVE_8, LookAheadSquareState.MOVE_9)
             # gb = self.loop(gb, LookAheadSquareState.MOVE_9, LookAheadSquareState.MOVE_10)
             
-            if self.tally_lookahead(gb) < self.min_required_possible_future_moves:
+            tally = self.tally_lookahead(gb)
+            if tally <= self.bad_lookahead:
                 gameboard.get_square(possible_directions[direction]).set_state(GameBoardSquareState.BAD_LOOKAHEAD)
-            
+            elif tally > self.bad_lookahead and tally <= self.poor_lookahead:
+                gameboard.get_square(possible_directions[direction]).set_state(GameBoardSquareState.POOR_LOOKAHEAD)
+            elif tally > self.poor_lookahead and tally <= self.questionable_lookahead:
+                gameboard.get_square(possible_directions[direction]).set_state(GameBoardSquareState.QUESTIONABLE_LOOKAHEAD)
+            # print("----- LOOKAHEAD ------")    
+            # print(gb.get_board_matrix())
+            # print("----- Tally: " + str(tally) + " ------")
         return gameboard
