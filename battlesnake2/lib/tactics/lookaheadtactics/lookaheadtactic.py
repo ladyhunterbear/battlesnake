@@ -7,7 +7,7 @@ from battlesnake2.lib.coordinates.coordinate import Coordinate
 import copy
 
 class LookAheadTactic(Tactic):
-    min_required_possible_future_moves = 10
+    min_required_possible_future_moves = 15
     
     override_values = [
         GameBoardSquareState.FOOD.value,

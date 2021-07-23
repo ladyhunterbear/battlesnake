@@ -8,18 +8,48 @@ from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
 
 '''
 class HunterTactic(Tactic):
-  override_states = [
+  my_snake_overrides = [
     GameBoardSquareState.SNAKE_SELF_BODY.value,
-    GameBoardSquareState.SNAKE_SELF_TAIL.value,
+    GameBoardSquareState.SNAKE_SELF_TAIL.value
+  ]
+  food_hazard_overrides = [
     GameBoardSquareState.FOOD.value,
     GameBoardSquareState.HAZARD.value
   ]
+  weaker_snake_overrides = [
+    GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE.value,
+    GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP.value,
+    GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEPS.value,
+    GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEPS.value
+  ]
+  equal_snake_overrides = [
+    GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE.value,
+    GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP.value,
+    GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS.value,
+    GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS.value
+  ]
+  stronger_snake_overrides = [
+    GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE.value,
+    GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP.value,
+    GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS.value,
+    GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS.value
+  ]
+  
+  def not_on_edge(self, gameboard: GameBoard, gamestate: GameState) -> bool:
+    board_dimensions = gameboard.get_board_dimensions()
+    x = gamestate.get_my_snake().get_head().get_x()
+    y = gamestate.get_my_snake().get_head().get_y()
+    return x > 0 and x < board_dimensions[0] - 1 and y > 0 and y < board_dimensions[1] - 1
+  
   def weaker_loop(self, gameboard: GameBoard, current_state: GameBoardSquareState, new_state: GameBoardSquareState) -> GameBoard:
     for coords in gameboard.filter_type(current_state):
       for coord in gameboard.get_adjacent_coordinates(coords):        
         current_square_value = gameboard.get_square(coord).get_state().value
         greater_than = current_square_value > GameBoardSquareState.SNAKE_ENEMY_BODY.value
-        not_override_state = current_square_value not in self.override_states
+        not_in_override_food = current_square_value not in self.food_hazard_overrides
+        not_in_override_my_snake = current_square_value not in self.my_snake_overrides
+        not_in_override_weaker_snake = current_square_value not in self.weaker_snake_overrides
+        not_override_state = not_in_override_food and not_in_override_my_snake and not_in_override_weaker_snake
         less_than = current_square_value < new_state.value
         if greater_than and not_override_state and less_than:
           gameboard.get_square(coord).set_state(new_state)
@@ -30,7 +60,10 @@ class HunterTactic(Tactic):
       for coord in gameboard.get_adjacent_coordinates(coords):        
         current_square_value = gameboard.get_square(coord).get_state().value
         greater_than = current_square_value > GameBoardSquareState.SNAKE_ENEMY_BODY.value
-        not_override_state = current_square_value not in self.override_states
+        not_in_override_food = current_square_value not in self.food_hazard_overrides
+        not_in_override_my_snake = current_square_value not in self.my_snake_overrides
+        not_in_override_equal_snake = current_square_value not in self.equal_snake_overrides
+        not_override_state = not_in_override_food and not_in_override_my_snake and not_in_override_equal_snake
         if greater_than and not_override_state:
           gameboard.get_square(coord).set_state(new_state)
     return gameboard
@@ -40,27 +73,49 @@ class HunterTactic(Tactic):
       for coord in gameboard.get_adjacent_coordinates(coords):        
         current_square_value = gameboard.get_square(coord).get_state().value
         greater_than = current_square_value > GameBoardSquareState.SNAKE_ENEMY_BODY.value
-        not_override_state = current_square_value not in self.override_states
+        # not_in_override_food = current_square_value not in self.food_hazard_overrides
+        not_in_override_my_snake = current_square_value not in self.my_snake_overrides
+        not_in_override_stronger_snake = current_square_value not in self.stronger_snake_overrides
+        not_override_state = not_in_override_my_snake and not_in_override_stronger_snake
+
         if greater_than and not_override_state:
           gameboard.get_square(coord).set_state(new_state)
     return gameboard
   
-  
-  def apply(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
-    # WEAKER ENEMY
+  def hunter_weaker_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP)
-    gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP)
-    gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEP)
-     
-    #EQUAL ENEMY
+    gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEPS, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_4_STEPS)
+    return gameboard
+    
+  def avoid_weaker_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    return gameboard
+    
+  def avoid_equal_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP)
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    return gameboard
     
-    # STRONGER ENEMY
+  def avoid_stronger_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
-    
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    return gameboard
+
+  def apply(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
+    if self.not_on_edge(gameboard, gamestate):
+      gameboard = self.hunter_weaker_snakes(gameboard, gamestate)
+    else:
+      gameboard = self.avoid_weaker_snakes(gameboard, gamestate)
+    gameboard = self.avoid_equal_snakes(gameboard, gamestate)
+    gameboard = self.avoid_stronger_snakes(gameboard, gamestate)
     return gameboard

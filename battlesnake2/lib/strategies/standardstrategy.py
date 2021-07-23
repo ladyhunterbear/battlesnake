@@ -15,9 +15,9 @@ class StandardStrategy(GameStrategy):
             opponent = opponents.get(id)
             opponent_longer =  opponent.get_length() > my_snake.get_length()
             opponent_equal =  opponent.get_length() == my_snake.get_length()
-            if opponent_longer or (opponent_equal and opponent.is_healthier(my_snake)):
-                if gameboard.distance(opponent.get_head(), my_snake.get_head()) < 3:
-                    return True
+            distance_to_opponent = gameboard.distance(opponent.get_head(), my_snake.get_head())
+            if (opponent_longer or opponent_equal) and distance_to_opponent <= 3:
+                return True
         return False
     
     def _before(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
