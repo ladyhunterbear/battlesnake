@@ -107,22 +107,22 @@ class HunterTactic(Tactic):
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP)
     # Smaller game boards required less avoidance
-    if gameboard.get_board_dimensions()[0] >= 8 and gameboard.get_board_dimensions()[1] >= 8: 
-      gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    # if gameboard.get_board_dimensions()[0] >= 8 and gameboard.get_board_dimensions()[1] >= 8: 
+    gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
     # Biggest game boards allow most avoidance
-    if gameboard.get_board_dimensions()[0] >= 10 and gameboard.get_board_dimensions()[1] >= 10:
-      gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    # if gameboard.get_board_dimensions()[0] >= 10 and gameboard.get_board_dimensions()[1] >= 10:
+    gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS)
     return gameboard
     
   def avoid_stronger_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
     # Smaller game boards required less avoidance
-    if gameboard.get_board_dimensions()[0] >= 8 and gameboard.get_board_dimensions()[1] >= 8: 
-      gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    #if gameboard.get_board_dimensions()[0] >= 8 and gameboard.get_board_dimensions()[1] >= 8: 
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
     # Biggest game boards allow most avoidance
-    if gameboard.get_board_dimensions()[0] >= 10 and gameboard.get_board_dimensions()[1] >= 10:
-      gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    # if gameboard.get_board_dimensions()[0] >= 10 and gameboard.get_board_dimensions()[1] >= 10:
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
     return gameboard
 
   def apply(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
