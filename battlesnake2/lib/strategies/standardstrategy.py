@@ -16,7 +16,7 @@ class StandardStrategy(GameStrategy):
             opponent_longer =  opponent.get_length() > my_snake.get_length()
             opponent_equal =  opponent.get_length() == my_snake.get_length()
             distance_to_opponent = gameboard.distance(opponent.get_head(), my_snake.get_head())
-            if (opponent_longer or opponent_equal) and distance_to_opponent <= 4:
+            if (opponent_longer or opponent_equal) and distance_to_opponent <= 6:
                 return True
         return False
     
