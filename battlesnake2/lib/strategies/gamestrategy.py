@@ -5,7 +5,7 @@ from battlesnake2.lib.tactics.lookaheadtactics.lookaheadtactic import LookAheadT
 from battlesnake2.lib.game.gamestate import GameState
 
 class GameStrategy: 
-    min_health = 50
+    min_health = 100
         
     def _my_snake_health_low(self, gamestate: GameState) -> bool:
         return self.min_health > gamestate.get_my_snake().get_health()
