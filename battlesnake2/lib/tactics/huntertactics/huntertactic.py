@@ -61,9 +61,13 @@ class HunterTactic(Tactic):
       for coord in gameboard.get_adjacent_coordinates(coords):        
         current_square_value = gameboard.get_square(coord).get_state().value
         greater_than = current_square_value > GameBoardSquareState.SNAKE_ENEMY_BODY.value
-        not_in_override_food = current_square_value not in self.food_hazard_overrides
+        
+        not_in_override_food = True
+        if new_state != GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE:
+          not_in_override_food = current_square_value not in self.food_hazard_overrides
         not_in_override_my_snake = current_square_value not in self.my_snake_overrides
         not_in_override_equal_snake = current_square_value not in self.equal_snake_overrides
+        
         not_override_state = not_in_override_food and not_in_override_my_snake and not_in_override_equal_snake
         if greater_than and not_override_state:
           gameboard.get_square(coord).set_state(new_state)
@@ -74,7 +78,10 @@ class HunterTactic(Tactic):
       for coord in gameboard.get_adjacent_coordinates(coords):        
         current_square_value = gameboard.get_square(coord).get_state().value
         greater_than = current_square_value > GameBoardSquareState.SNAKE_ENEMY_BODY.value
-        # not_in_override_food = current_square_value not in self.food_hazard_overrides
+        not_in_override_food = True
+        if new_state != GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE:
+          not_in_override_food =  current_square_value not in self.food_hazard_overrides
+       
         not_in_override_my_snake = current_square_value not in self.my_snake_overrides
         not_in_override_stronger_snake = current_square_value not in self.stronger_snake_overrides
         not_override_state = not_in_override_my_snake and not_in_override_stronger_snake
