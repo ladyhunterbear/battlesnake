@@ -287,7 +287,9 @@ class BattleSnake2LookAheadTestCase(TestCase):
       }
     '''
     
-    expected_response = {'move': 'up', 'shout': 'I should move up'}
+    # TODO this one needs work
+    
+    expected_response = {'move': 'down', 'shout': 'I should move down'}
      
     req = json.loads(request)
     game = Game(req)

@@ -9,6 +9,7 @@ from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
 '''
 class HunterTactic(Tactic):
   my_snake_overrides = [
+    GameBoardSquareState.SNAKE_SELF_HEAD.value,
     GameBoardSquareState.SNAKE_SELF_BODY.value,
     GameBoardSquareState.SNAKE_SELF_TAIL.value
   ]
@@ -89,7 +90,12 @@ class HunterTactic(Tactic):
     gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
     gameboard = self.weaker_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_3_STEPS, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_4_STEPS)
     return gameboard
-    
+  
+  '''
+  In some cases we actually want to do the opposite of hunting weaker enemy snakes,
+  particularly to prevent getting trapped on the outside edge and running out of 
+  space.
+  '''  
   def avoid_weaker_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
@@ -100,15 +106,23 @@ class HunterTactic(Tactic):
   def avoid_equal_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP)
-    gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
-    gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    # Smaller game boards required less avoidance
+    if gameboard.get_board_dimensions()[0] >= 8 and gameboard.get_board_dimensions()[1] >= 8: 
+      gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    # Biggest game boards allow most avoidance
+    if gameboard.get_board_dimensions()[0] >= 10 and gameboard.get_board_dimensions()[1] >= 10:
+      gameboard = self.equal_loop(gameboard, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS)
     return gameboard
     
   def avoid_stronger_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
-    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
-    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
+    # Smaller game boards required less avoidance
+    if gameboard.get_board_dimensions()[0] >= 8 and gameboard.get_board_dimensions()[1] >= 8: 
+      gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
+    # Biggest game boards allow most avoidance
+    if gameboard.get_board_dimensions()[0] >= 10 and gameboard.get_board_dimensions()[1] >= 10:
+      gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
     return gameboard
 
   def apply(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:

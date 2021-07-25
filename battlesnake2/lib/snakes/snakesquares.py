@@ -61,12 +61,12 @@ class SnakeSquares:
             
     def get_opponent_strength(self) -> OpponentStrength:
         o = self.get_opponent_relative_length()
-        h = self.get_opponent_relative_health()
-        if o == OpponentStrength.STRONGER or (o == OpponentStrength.EQUAL and h == OpponentStrength.STRONGER):
+        
+        if o == OpponentStrength.STRONGER:
             return OpponentStrength.STRONGER
-        elif o == OpponentStrength.EQUAL and h == OpponentStrength.EQUAL:
+        elif o == OpponentStrength.EQUAL:
             return OpponentStrength.EQUAL
-        elif o == OpponentStrength.WEAKER or (o == OpponentStrength.EQUAL and h == OpponentStrength.WEAKER):
+        elif o == OpponentStrength.WEAKER:
             return OpponentStrength.WEAKER
             
     def get_opponent_relative_length(self) -> OpponentStrength:  
@@ -77,11 +77,10 @@ class SnakeSquares:
         elif self.opponent.get_length() < self.my_snake.get_length():
             return OpponentStrength.WEAKER
                 
-    def get_opponent_relative_health(self) -> OpponentStrength:
-        if self.opponent.get_health() > self.my_snake.get_health():
-            return OpponentStrength.STRONGER
-        elif self.my_snake.get_health() == self.opponent.get_health():
-            return OpponentStrength.EQUAL
-        elif self.opponent.get_health() < self.my_snake.get_health():
-            return OpponentStrength.WEAKER
-            
+    # def get_opponent_relative_health(self) -> OpponentStrength:
+    #     if self.opponent.get_health() > self.my_snake.get_health():
+    #         return OpponentStrength.STRONGER
+    #     elif self.my_snake.get_health() == self.opponent.get_health():
+    #         return OpponentStrength.EQUAL
+    #     elif self.opponent.get_health() < self.my_snake.get_health():
+    #         return OpponentStrength.WEAKER
