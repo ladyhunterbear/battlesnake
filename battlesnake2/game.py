@@ -125,6 +125,6 @@ class Game:
     def get_move(self):
         choice = self.evaluate_gameboard()
         board_matrix = self.state.get_gameboard().get_board_matrix()
-        # print(board_matrix)
-        # print(choice)        
+        print(board_matrix)
+        print(choice)        
         return {"move": choice, "shout": str("I should move " + choice)}

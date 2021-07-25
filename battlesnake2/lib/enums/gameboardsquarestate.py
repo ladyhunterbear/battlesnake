@@ -9,7 +9,7 @@ class GameBoardSquareState(Enum):
         SNAKE_SELF_HEAD = -1
         SNAKE_ENEMY_BODY = 0
         NULL = 0
-        SNAKE_ENEMY_TAIL = 1
+        SNAKE_ENEMY_TAIL = 0
         BAD_LOOKAHEAD = 2
         SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE = 3
         SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE = 4
