@@ -152,15 +152,15 @@ class BattleSnake2NoEdgeHuntingTestCase(TestCase):
           "name": "My Snake",
           "health": 54,
           "body": [
-            {"x": 5, "y": 1}, 
             {"x": 5, "y": 2}, 
-            {"x": 5, "y": 3},
+            {"x": 5, "y": 3}, 
             {"x": 5, "y": 4},
             {"x": 5, "y": 5},
-            {"x": 5, "y": 6}
+            {"x": 5, "y": 6},
+            {"x": 5, "y": 7}
           ],
           "latency": "111",
-          "head": {"x": 5, "y": 1},
+          "head": {"x": 5, "y": 2},
           "length": 6,
           "shout": "why are we shouting??",
           "squad": ""
@@ -168,7 +168,7 @@ class BattleSnake2NoEdgeHuntingTestCase(TestCase):
       }
     '''
     
-    expected_response = {'move': 'right', 'shout': 'I should move right'}
+    expected_response = {'move': 'down', 'shout': 'I should move down'}
      
     req = json.loads(request)
     game = Game(req)

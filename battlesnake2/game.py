@@ -104,6 +104,7 @@ class Game:
     Evaluate the game board
     '''
     def evaluate_gameboard(self):
+        choice = None
         best_move_coords = None
         best_move_score = 0
         gameboard = self.state.get_gameboard()
@@ -117,7 +118,13 @@ class Game:
             if new_square_score > best_move_score:
                 best_move_score = gameboard.get_square(coords).get_state().value
                 best_move_coords = coords
-        return self.relative_direction(self.state.get_my_snake().get_head(), best_move_coords)
+        if best_move_coords is not None:
+            return self.relative_direction(self.state.get_my_snake().get_head(), best_move_coords)
+        else:
+            # Default to find gameboard center if lost in the storm
+            center_x = math.floor(gameboard.get_board_dimensions()[0] / 2)
+            center_y = math.floor(gameboard.get_board_dimensions()[1] / 2)
+            return self.relative_direction(self.state.get_my_snake().get_head(), Coordinate(center_x, center_y))
     
     '''
     Main method for processing and returning game move

@@ -13,6 +13,13 @@ class HunterTactic(Tactic):
     GameBoardSquareState.SNAKE_SELF_BODY.value,
     GameBoardSquareState.SNAKE_SELF_TAIL.value
   ]
+  my_snake_tail_target_override = [
+    GameBoardSquareState.SNAKE_SELF_TAIL_TARGET.value,
+    GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_1_STEP.value,
+    GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_2_STEPS.value,
+    GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_3_STEPS.value,
+    GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_4_STEPS.value
+  ]
   food_hazard_overrides = [
     GameBoardSquareState.FOOD.value,
     GameBoardSquareState.HAZARD.value
@@ -40,7 +47,7 @@ class HunterTactic(Tactic):
     board_dimensions = gameboard.get_board_dimensions()
     x = gamestate.get_my_snake().get_head().get_x()
     y = gamestate.get_my_snake().get_head().get_y()
-    return x > 0 and x < board_dimensions[0] - 1 and y > 0 and y < board_dimensions[1] - 1
+    return x > 1 and x < board_dimensions[0] - 2 and y > 1 and y < board_dimensions[1] - 2
   
   def weaker_loop(self, gameboard: GameBoard, current_state: GameBoardSquareState, new_state: GameBoardSquareState) -> GameBoard:
     for coords in gameboard.filter_type(current_state):
@@ -61,15 +68,18 @@ class HunterTactic(Tactic):
       for coord in gameboard.get_adjacent_coordinates(coords):        
         current_square_value = gameboard.get_square(coord).get_state().value
         greater_than = current_square_value > GameBoardSquareState.SNAKE_ENEMY_BODY.value
-        
+        less_than = new_state.value < current_square_value
         not_in_override_food = True
         if new_state != GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE:
           not_in_override_food = current_square_value not in self.food_hazard_overrides
-        not_in_override_my_snake = current_square_value not in self.my_snake_overrides
+        if new_state is not GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE:
+          my_snake_overrides = self.my_snake_overrides + self.my_snake_tail_target_override
+          not_in_override_my_snake = current_square_value not in my_snake_overrides
+        else:
+          not_in_override_my_snake = current_square_value not in self.my_snake_overrides
         not_in_override_equal_snake = current_square_value not in self.equal_snake_overrides
-        
         not_override_state = not_in_override_food and not_in_override_my_snake and not_in_override_equal_snake
-        if greater_than and not_override_state:
+        if greater_than and less_than and not_override_state:
           gameboard.get_square(coord).set_state(new_state)
     return gameboard
   
