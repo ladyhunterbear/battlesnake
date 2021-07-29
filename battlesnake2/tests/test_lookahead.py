@@ -295,3 +295,106 @@ class BattleSnake2LookAheadTestCase(TestCase):
     game = Game(req)
     response = game.get_move()
     self.assertEqual(expected_response, response) 
+    
+    
+  def test_snake_should_escape_up(self):
+    request = '''
+      {
+        "game": {
+          "id": "game-00fe20da-94ad-11ea-bb37",
+          "ruleset": {
+            "name": "standard",
+            "version": "v.1.2.3"
+          },
+          "timeout": 500
+        },
+        "turn": 14,
+        "board": {
+          "height": 11,
+          "width": 11,
+          "food": [
+            {"x": 6, "y": 8}
+          ],
+          "hazards": [],
+          "snakes": [
+            {
+              "id": "snake-508e96ac-94ad-11ea-bb39",
+              "name": "Enemy Snake",
+              "health": 54,
+              "body": [
+                {"x": 8, "y": 0},
+                {"x": 9, "y": 0},
+                {"x": 10, "y": 0},
+                {"x": 10, "y": 1},
+                {"x": 10, "y": 2},
+                {"x": 10, "y": 3},
+                {"x": 9, "y": 3},
+                {"x": 8, "y": 3},
+                {"x": 8, "y": 2}
+              ],
+              "latency": "111",
+              "head": {"x": 8, "y": 2},
+              "length": 9,
+              "shout": "why are we shouting??",
+              "squad": ""
+            },        
+            {
+              "id": "snake-508e96ac-94ad-11ea-bb37",
+              "name": "My Snake",
+              "health": 54,
+              "body": [
+                {"x": 6, "y": 4}, 
+                {"x": 6, "y": 3}, 
+                {"x": 7, "y": 3},
+                {"x": 7, "y": 4},
+                {"x": 7, "y": 5},
+                {"x": 8, "y": 5},
+                {"x": 8, "y": 6},
+                {"x": 8, "y": 7},
+                {"x": 9, "y": 7},
+                {"x": 9, "y": 8},
+                {"x": 10, "y": 8}
+              ],
+              "latency": "111",
+              "head": {"x": 10, "y": 8},
+              "length": 11,
+              "shout": "why are we shouting??",
+              "squad": ""
+            }
+            
+          ]
+        },
+        "you": {
+          "id": "snake-508e96ac-94ad-11ea-bb37",
+          "name": "My Snake",
+          "health": 54,
+          "body": [
+            {"x": 6, "y": 4}, 
+            {"x": 6, "y": 3}, 
+            {"x": 7, "y": 3},
+            {"x": 7, "y": 4},
+            {"x": 7, "y": 5},
+            {"x": 8, "y": 5},
+            {"x": 8, "y": 6},
+            {"x": 8, "y": 7},
+            {"x": 9, "y": 7},
+            {"x": 9, "y": 8},
+            {"x": 10, "y": 8}
+          ],
+          "latency": "111",
+          "head": {"x": 10, "y": 8},
+          "length": 11,
+          "shout": "why are we shouting??",
+          "squad": ""
+        }
+      }
+    '''
+    
+    # TODO this one needs work
+    
+    expected_response = {'move': 'up', 'shout': 'I should move up'}
+     
+    req = json.loads(request)
+    game = Game(req)
+    response = game.get_move()
+    self.assertEqual(expected_response, response) 
