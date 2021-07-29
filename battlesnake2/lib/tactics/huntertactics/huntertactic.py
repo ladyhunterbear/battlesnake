@@ -22,6 +22,9 @@ class HunterTactic(Tactic):
   ]
   food_hazard_overrides = [
     GameBoardSquareState.FOOD.value,
+    GameBoardSquareState.FOOD_1_STEP.value,
+    GameBoardSquareState.FOOD_2_STEPS.value,
+    GameBoardSquareState.FOOD_3_STEPS.value,
     GameBoardSquareState.HAZARD.value
   ]
   weaker_snake_overrides = [

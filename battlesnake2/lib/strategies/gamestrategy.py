@@ -5,7 +5,7 @@ from battlesnake2.lib.tactics.lookaheadtactics.lookaheadtactic import LookAheadT
 from battlesnake2.lib.game.gamestate import GameState
 
 class GameStrategy: 
-    min_health = 100
+    min_health = 30
         
     def _my_snake_health_low(self, gamestate: GameState) -> bool:
         return self.min_health > gamestate.get_my_snake().get_health()
@@ -14,7 +14,7 @@ class GameStrategy:
         my_snake_length = gamestate.get_my_snake().get_length()
         opponents = gamestate.get_opponents()
         for opponent_id in opponents.get_ids():
-            if opponents.get(opponent_id).get_length() >= my_snake_length:
+            if opponents.get(opponent_id).get_length() >= my_snake_length - 2:
                 return True
         return False
         
