@@ -31,7 +31,7 @@ def hello(request):
     return JsonResponse({
         "apiversion": "1",
         "author": "jharper",
-        "color": "#D83727",
+        "color": "#F92016",
         "head": "orca",
         "tail": "rocket",
     })
