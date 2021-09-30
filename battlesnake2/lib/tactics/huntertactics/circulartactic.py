@@ -32,9 +32,10 @@ class CircularTactic(Tactic):
   
   def apply(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
     # first replace tail with tail_target
-    gameboard = self.set_tail_target(gameboard)
+    # gameboard = self.set_tail_target(gameboard)
+    
     # then update around tail target
-    gameboard = self.chaser_loop(gameboard, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_1_STEP)
+    gameboard = self.chaser_loop(gameboard, GameBoardSquareState.SNAKE_SELF_TAIL, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_1_STEP)
     gameboard = self.chaser_loop(gameboard, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_1_STEP, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_2_STEPS)
     gameboard = self.chaser_loop(gameboard, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_2_STEPS, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_3_STEPS)
     gameboard = self.chaser_loop(gameboard, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_3_STEPS, GameBoardSquareState.SNAKE_SELF_TAIL_TARGET_4_STEPS)

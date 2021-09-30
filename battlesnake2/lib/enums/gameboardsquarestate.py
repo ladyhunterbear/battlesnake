@@ -9,6 +9,7 @@ class GameBoardSquareState(Enum):
         SNAKE_ENEMY_BODY = 0
         NULL = 0
         SNAKE_ENEMY_TAIL = 0
+        SNAKE_SELF_TAIL = 1
         BAD_LOOKAHEAD = 2
         SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE = 3
         SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE = 4
@@ -33,7 +34,6 @@ class GameBoardSquareState(Enum):
         EMPTY_EDGE_1_STEP = 35
         EMPTY_EDGE_2_STEPS = 40
         EMPTY_EDGE_3_STEPS = 45
-        SNAKE_SELF_TAIL = 47
         EMPTY = 50
         SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS = 53
         SNAKE_SELF_TAIL_TARGET_4_STEPS = 58
@@ -48,7 +48,6 @@ class GameBoardSquareState(Enum):
         SNAKE_SELF_TAIL_TARGET_1_STEP = 88
         SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE_1_STEP = 89
         FOOD_1_STEP = 90
-        SNAKE_SELF_TAIL_TARGET = 98
         SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE = 99
         FOOD = 100
 
