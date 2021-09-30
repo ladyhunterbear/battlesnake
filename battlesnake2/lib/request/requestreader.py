@@ -8,7 +8,6 @@ from battlesnake2.lib.hazard.hazardcollection import HazardCollection
 from battlesnake2.lib.hazard.hazard import Hazard
 from battlesnake2.lib.coordinates.coordinate import Coordinate
 
-
 '''
 Read the BattleSnake json request and produce a GameState
 Separate reading from JSON and converting to objects from doing anything with that resulting object.

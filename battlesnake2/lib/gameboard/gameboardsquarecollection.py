@@ -1,7 +1,6 @@
 from battlesnake2.lib.gameboard.gameboardsquare import GameBoardSquare
 from battlesnake2.lib.coordinates.coordinate import Coordinate
 
-
 class GameBoardSquareCollection: 
     def __init__(self):
         self.squares = {}

@@ -86,14 +86,13 @@ class EdgeTactic(Tactic):
           gameboard.get_square(coord).set_state(new_state)
     return gameboard
 
-
   def apply(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
+    # Prefer to avoid edges
     gameboard = self.set_edges_loop(gameboard)
     gameboard = self.edge_loop(gameboard, GameBoardSquareState.EMPTY_EDGE, GameBoardSquareState.EMPTY_EDGE_1_STEP)
     gameboard = self.edge_loop(gameboard, GameBoardSquareState.EMPTY_EDGE_1_STEP, GameBoardSquareState.EMPTY_EDGE_2_STEPS)
     gameboard = self.edge_loop(gameboard, GameBoardSquareState.EMPTY_EDGE_2_STEPS, GameBoardSquareState.EMPTY_EDGE_3_STEPS)
-
-
+    # Prefer to avoid corners
     gameboard = self.set_corners(gameboard)
     gameboard = self.corner_loop(gameboard, GameBoardSquareState.EMPTY_CORNER, GameBoardSquareState.EMPTY_CORNER_1_STEP)
     gameboard = self.corner_loop(gameboard, GameBoardSquareState.EMPTY_CORNER_1_STEP, GameBoardSquareState.EMPTY_CORNER_2_STEPS)

@@ -3,6 +3,7 @@ from battlesnake2.lib.gameboard.gameboardsquarecollection import GameBoardSquare
 from battlesnake2.lib.enums.gameboardsquarestate import GameBoardSquareState
 from battlesnake2.lib.gameboard.gameboardsquare import GameBoardSquare
 from battlesnake2.lib.enums.opponentstrength import OpponentStrength
+
 '''
 Convert Snake classes to GameBoardSquareCollections
 '''

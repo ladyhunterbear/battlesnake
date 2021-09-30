@@ -9,10 +9,8 @@ from battlesnake2.lib.tactics.areatactics.edgetactic import EdgeTactic
 from battlesnake2.lib.tactics.areatactics.edgehuntertactic import EdgeHunterTactic
 from battlesnake2.lib.tactics.areatactics.wanderertactic import WandererTactic
 
-
 class DuelStategy(GameStrategy):
     min_health < 20
-    
     
     def __tactics(gamevision: GameBoard, gamestate: GameState) -> GameBoard:
         # Move this into PlayerStrategy with a .get()
@@ -27,20 +25,14 @@ class DuelStategy(GameStrategy):
         else:
             diet_tactic = DietTactic()
             gamevision = diet_tactic.process(gamevision, gamestate)
-        
-        
-        
-        
         return gamevision
     
     def process_common(self):
         wanderer_strategy = WandererStrategy()
         self.gameboard = wanderer_strategy.process(self.gameboard)
-        
         #Avoidance Strategy
         avoidance_strategy = AvoidanceStrategy()
         self.gameboard = avoidance_strategy.process(self.gameboard)
-      
       
     def process_hunter_strategy(self):
         # Protection Strategy

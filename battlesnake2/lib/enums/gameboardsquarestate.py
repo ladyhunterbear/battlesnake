@@ -1,7 +1,6 @@
 from enum import Enum
 
 class GameBoardSquareState(Enum):
-        HAZARD = -99
         SNAKE_SELF_BODY = -11
         SNAKE_STRONGER_ENEMY_HEAD = -4
         SNAKE_EQUAL_ENEMY_HEAD = -3
@@ -24,6 +23,7 @@ class GameBoardSquareState(Enum):
         SNAKE_ENEMY_BODY_1_STEP = 16
         SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS = 17
         EMPTY_CORNER_3_STEPS = 19
+        HAZARD = 20
         QUESTIONABLE_LOOKAHEAD = 22
         SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_2_STEPS = 23
         AVOID_FOOD = 25
@@ -34,7 +34,6 @@ class GameBoardSquareState(Enum):
         EMPTY_EDGE_2_STEPS = 40
         EMPTY_EDGE_3_STEPS = 45
         SNAKE_SELF_TAIL = 47
-        HAZARD_1_STEP = 48
         EMPTY = 50
         SNAKE_EQUAL_ENEMY_HEAD_CAN_MOVE_3_STEPS = 53
         SNAKE_SELF_TAIL_TARGET_4_STEPS = 58
