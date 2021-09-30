@@ -117,7 +117,7 @@ class HunterTactic(Tactic):
   space.
   '''  
   def avoid_weaker_snakes(self, gameboard: GameBoard, gamestate: GameState) -> GameBoard:
-    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
+    gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_1_STEP, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS)
     gameboard = self.stronger_loop(gameboard, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_2_STEPS, GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD_CAN_MOVE_3_STEPS)
