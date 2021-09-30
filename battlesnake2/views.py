@@ -31,9 +31,9 @@ def hello(request):
     return JsonResponse({
         "apiversion": "1",
         "author": "jharper",
-        "color": "#42F5E0",
+        "color": "#D83727",
         "head": "orca",
-        "tail": "bolt",
+        "tail": "rocket",
     })
 
 @csrf_exempt
