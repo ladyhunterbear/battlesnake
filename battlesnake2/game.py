@@ -36,6 +36,8 @@ class Game:
         request = RequestReader(request)
         self.state = GameState()
         self.state.set_gameboard(request.gameboard())
+        self.state.set_hazards(request.hazards())
+        self.add_to_gameboard(self.state.get_hazards())
         self.state.set_my_snake(request.my_snake())
         self.add_my_snake_squares()
         self.state.set_opponents(request.opponents())
@@ -43,8 +45,6 @@ class Game:
             self.add_opponent_snake_squares()
         self.state.set_food(request.food())
         self.add_to_gameboard(self.state.get_food())
-        self.state.set_hazards(request.hazards())
-        self.add_to_gameboard(self.state.get_hazards())
         self.state.set_ruleset(request.ruleset())
 
 
