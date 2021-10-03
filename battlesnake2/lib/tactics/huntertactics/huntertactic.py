@@ -25,7 +25,7 @@ class HunterTactic(Tactic):
     GameBoardSquareState.FOOD_1_STEP.value,
     GameBoardSquareState.FOOD_2_STEPS.value,
     GameBoardSquareState.FOOD_3_STEPS.value,
-    GameBoardSquareState.HAZARD.value
+    # GameBoardSquareState.HAZARD.value
   ]
   weaker_snake_overrides = [
     GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD_CAN_MOVE.value,

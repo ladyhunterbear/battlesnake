@@ -10,7 +10,7 @@ class CircularTactic(Tactic):
   override_states = [
     GameBoardSquareState.SNAKE_SELF_BODY.value,
     GameBoardSquareState.FOOD.value,
-    GameBoardSquareState.HAZARD.value,
+    # GameBoardSquareState.HAZARD.value,
     GameBoardSquareState.SNAKE_ENEMY_TAIL.value
   ]
   

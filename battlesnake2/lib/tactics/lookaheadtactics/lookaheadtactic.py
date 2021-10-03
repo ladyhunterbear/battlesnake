@@ -13,7 +13,7 @@ class LookAheadTactic(Tactic):
     
     override_values = [
         GameBoardSquareState.FOOD.value,
-        GameBoardSquareState.HAZARD.value,
+        # GameBoardSquareState.HAZARD.value,
         GameBoardSquareState.SNAKE_WEAKER_ENEMY_HEAD.value,
         GameBoardSquareState.SNAKE_EQUAL_ENEMY_HEAD.value,
         GameBoardSquareState.SNAKE_STRONGER_ENEMY_HEAD.value,

@@ -23,7 +23,7 @@ class EdgeTactic(Tactic):
     GameBoardSquareState.FOOD_2_STEPS.value,
     GameBoardSquareState.FOOD_3_STEPS.value,
     GameBoardSquareState.FOOD_4_STEPS.value,
-    GameBoardSquareState.HAZARD.value
+    # GameBoardSquareState.HAZARD.value
   ]
   
   def get_corner_coords(self, gameboard: GameBoard) -> list:
